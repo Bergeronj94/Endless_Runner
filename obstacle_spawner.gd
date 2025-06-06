@@ -12,12 +12,16 @@ var obstacles_array: Dictionary
 var player_detection_dictionary: Dictionary
 
 
-#calculating score
+#calculating score and randomizing the spawn_distance and intervals
 var num_jumps: int
+var random = RandomNumberGenerator.new()
 
 	
-
-
+func _on_obstacle_spawn_timer_timeout(): #this is where the game actually randomizes the stuff and spawns the timers
+	randomize_distance_interval()
+	spawn_obstacle()
+	score_counter()
+	pass
 func spawn_obstacle():
 	var obstacle = StaticBody2D.new()
 	get_parent().add_child(obstacle) # Add the obstacle to the game world
@@ -33,35 +37,11 @@ func spawn_obstacle():
 	obstacle.global_position = Vector2(player.global_position.x + obstacle_spawn_distance, 0)
 	obstacles_array[str(obstacle.global_position.x)] = obstacle 
 	obstacle.add_to_group('obstacles')
-	
-	#var player_detection_area = Area2D.new()
-	#obstacle.add_child(player_detection_area)
-	
-	#var player_detection_shape = CollisionShape2D.new()
-	#player_detection_shape.shape = RectangleShape2D.new()
-#	player_detection_shape.shape.size = obstacle_size + Vector2(0, 1000)
-#	player_detection_area.add_child(player_detection_shape)
-#	player_detection_area.global_position = Vector2(player.global_position.x + obstacle_spawn_distance, 0)
-	
-#	player_detection_area.collision_layer = obstacle_collision_layer
-#	player_detection_area.collision_mask = obstacle_collision_mask
-	
 
+func randomize_distance_interval():
+	obstacle_spawn_distance = random.randi_range(400, 800)
+	obstacle_spawn_interval = randf_range(2, 5)
 	
-	
-	
-	
-	
-	
-	
-	
-func _on_obstacle_spawn_timer_timeout():
-	spawn_obstacle()
-	score_counter()
-	
-func score_counter():
-	var last_key_array = Array(obstacles_array.keys())
-	if len(last_key_array) >= 2:
-		if player.global_position.x > float(last_key_array[0]):
-			num_jumps += 1
-			last_key_array.erase(last_key_array[0])
+func score_counter(): #change this to just counting the frames passed and divide by delta
+	pass
+			

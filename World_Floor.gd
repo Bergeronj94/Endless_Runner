@@ -10,8 +10,8 @@ func _ready():
 	connect('score_reached', Callable(self, '_on_score_reached'))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if obstacle_spawner.num_jumps > 20:
+func _process(_delta):
+	if ScoreTracker.score % 5 == 0:
 		emit_signal('score_reached')
 		
 func _on_score_reached():

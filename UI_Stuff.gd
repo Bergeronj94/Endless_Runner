@@ -14,7 +14,7 @@ var obstacles_array: Dictionary
 #assign variables
 var can_debug: bool
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Input.is_action_pressed('pause'):
 		get_tree().paused = true
 	elif Input.is_action_just_released('pause'):
@@ -30,5 +30,7 @@ func _on_label_timer_timeout():
 		true:
 			position.text = str(player.position)
 			speed.text = str(player.velocity)
-			jumps.text = str(obstacle_spawner.num_jumps)
+			jumps.text = str(ScoreTracker.score)
+			
+			print(ScoreTracker.score)
 	
