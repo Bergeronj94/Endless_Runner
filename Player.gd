@@ -17,8 +17,6 @@ var previous_state: States #using this to check whether you need ot emit again
 #signals for states
 signal state_changed(new_state, delta)
 
-
-
 #handles the logic for all the states
 enum States {
 	IDLE,
@@ -56,15 +54,13 @@ func _physics_process(delta):
 	if not is_on_floor() and Input.is_action_just_pressed('dash'):
 		emit_signal('state_changed', States.DASHING, delta)
 	
-	#clamping our velocity
+	#clamping our velocity before we call move_and_slide
 	velocity.x = clamp(velocity.x, 0, 750)
 	move_and_slide()
 
 func _on_state_changed(new_state, _delta):
 	previous_state = state
 	state = new_state
-	print('state',state)
-	print('previous state', previous_state)
 	match state:
 		0: #IDLE
 			pass
@@ -76,7 +72,7 @@ func _on_state_changed(new_state, _delta):
 		3: #COLLIDED
 			pass
 		4: #DEATH
-			get_tree().quit()
+			pass
 		5: #FALLING and make sure you += the gravity so the falling because correct
 			pass
 		6: #DASHING
@@ -88,6 +84,7 @@ func _on_state_changed(new_state, _delta):
 func _on_player_obstacle_collision_detection_body_entered(body):
 	if body.is_in_group('obstacles'):
 		ScoreTracker.emit_signal('player_crashed')
+		emit_signal('state_changed', States.DEATH, 60)
 		
 
 

@@ -25,7 +25,7 @@ obstacle_spawner = NodePath("../obstacle_spawner")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_Floor"]
 shape = SubResource("WorldBoundaryShape2D_prkky")
 
-[node name="UI_Stuff" type="CanvasLayer" parent="." node_paths=PackedStringArray("player", "position", "speed", "jumps", "obstacle_spawner")]
+[node name="UI_Stuff" type="CanvasLayer" parent="." node_paths=PackedStringArray("player", "position", "speed", "jumps", "obstacle_spawner", "Pause")]
 process_mode = 3
 script = ExtResource("2_daaai")
 player = NodePath("../Player")
@@ -33,6 +33,7 @@ position = NodePath("Control/HBoxContainer/pos")
 speed = NodePath("Control/HBoxContainer/speed")
 jumps = NodePath("Control/HBoxContainer/jumps")
 obstacle_spawner = NodePath("../obstacle_spawner")
+Pause = NodePath("Control/Pause_Container")
 
 [node name="Control" type="Control" parent="UI_Stuff"]
 layout_mode = 3
@@ -64,11 +65,35 @@ text = "score"
 layout_mode = 2
 text = "Time left"
 
+[node name="Pause_Container" type="VBoxContainer" parent="UI_Stuff/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="resume" type="Button" parent="UI_Stuff/Control/Pause_Container"]
+layout_mode = 2
+text = "Resume?"
+
+[node name="reset" type="Button" parent="UI_Stuff/Control/Pause_Container"]
+layout_mode = 2
+text = "reset?"
+
+[node name="quit" type="Button" parent="UI_Stuff/Control/Pause_Container"]
+layout_mode = 2
+text = "quit?"
+
 [node name="label_timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+visible = false
 follow_viewport_enabled = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -91,5 +116,8 @@ autostart = true
 script = ExtResource("5_kdt26")
 player = NodePath("../Player")
 
+[connection signal="pressed" from="UI_Stuff/Control/Pause_Container/resume" to="UI_Stuff" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI_Stuff/Control/Pause_Container/reset" to="UI_Stuff" method="_on_reset_pressed"]
+[connection signal="pressed" from="UI_Stuff/Control/Pause_Container/quit" to="UI_Stuff" method="_on_quit_pressed"]
 [connection signal="timeout" from="label_timer" to="UI_Stuff" method="_on_label_timer_timeout"]
 [connection signal="timeout" from="obstacle_spawn_timer" to="obstacle_spawner" method="_on_obstacle_spawn_timer_timeout"]
