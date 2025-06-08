@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw3jkx4hdhl3v"]
+
+[ext_resource type="Script" uid="uid://diy4goydr63w6" path="res://GameOver.gd" id="1_pbxgx"]
+
+[node name="GameOver" type="Node2D" node_paths=PackedStringArray("control")]
+process_mode = 3
+script = ExtResource("1_pbxgx")
+control = NodePath("GO_CanvasLayer/GO_Control")
+
+[node name="GO_CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GO_Control" type="Control" parent="GO_CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GO_VBoxContainer" type="VBoxContainer" parent="GO_CanvasLayer/GO_Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -37.0
+offset_right = 77.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Play_Again" type="Button" parent="GO_CanvasLayer/GO_Control/GO_VBoxContainer"]
+layout_mode = 2
+text = "Play Again?"
+
+[node name="HSeparator" type="HSeparator" parent="GO_CanvasLayer/GO_Control/GO_VBoxContainer"]
+layout_mode = 2
+
+[node name="Quit_To_Menu" type="Button" parent="GO_CanvasLayer/GO_Control/GO_VBoxContainer"]
+layout_mode = 2
+text = "Quit to Main Menu"
+
+[connection signal="pressed" from="GO_CanvasLayer/GO_Control/GO_VBoxContainer/Play_Again" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="GO_CanvasLayer/GO_Control/GO_VBoxContainer/Quit_To_Menu" to="." method="_on_quit_to_menu_pressed"]
