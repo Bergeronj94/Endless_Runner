@@ -14,3 +14,8 @@ func _process(_delta):
 func _on_play_pressed():
 	var test_world_scene = preload("res://test_world.tscn")
 	get_tree().change_scene_to_packed(test_world_scene)
+
+
+func _on_level_select_pressed() -> void:
+	var level_select_scene = preload('res://level_select.tscn')
+	get_tree().change_scene_to_packed(level_select_scene)
