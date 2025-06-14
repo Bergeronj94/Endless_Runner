@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnyut3i65vcld"]
+
+[ext_resource type="Script" uid="uid://dbc2xqnjytaq7" path="res://level_select.gd" id="1_il3u1"]
+
+[node name="Level_Select" type="CanvasLayer" node_paths=PackedStringArray("Test_World_label", "Test_World_Score", "World_1", "World_1_Score")]
+script = ExtResource("1_il3u1")
+Test_World_label = NodePath("GridContainer/World_1/Test_World")
+Test_World_Score = NodePath("GridContainer/World_1/Score")
+World_1 = NodePath("GridContainer/world_2/Test_World")
+World_1_Score = NodePath("GridContainer/world_2/Score")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -72.0
+offset_right = 76.5
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+columns = 4
+
+[node name="World_1" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="Test_World" type="Label" parent="GridContainer/World_1"]
+layout_mode = 2
+text = "Test_World"
+
+[node name="HSeparator" type="HSeparator" parent="GridContainer/World_1"]
+layout_mode = 2
+theme_override_constants/separation = 55
+
+[node name="Score" type="Label" parent="GridContainer/World_1"]
+layout_mode = 2
+text = "Score"
+
+[node name="Test_World_Play" type="Button" parent="GridContainer/World_1"]
+layout_mode = 2
+text = "play"
+
+[node name="world_2" type="VBoxContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="Test_World" type="Label" parent="GridContainer/world_2"]
+layout_mode = 2
+text = "World_1"
+
+[node name="HSeparator" type="HSeparator" parent="GridContainer/world_2"]
+layout_mode = 2
+theme_override_constants/separation = 55
+
+[node name="Score" type="Label" parent="GridContainer/world_2"]
+layout_mode = 2
+text = "Score"
+
+[node name="World_1_Play" type="Button" parent="GridContainer/world_2"]
+layout_mode = 2
+text = "play"
+
+[connection signal="pressed" from="GridContainer/World_1/Test_World_Play" to="." method="_on_test_world_play_pressed"]
+[connection signal="pressed" from="GridContainer/world_2/World_1_Play" to="." method="_on_world_1_play_pressed"]
