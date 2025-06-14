@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://c4icf36nysfx6" path="res://player.tscn" id="1_8mr3b"]
 [ext_resource type="Script" uid="uid://b4nwthh2hafgs" path="res://World_Floor.gd" id="2_cso0f"]
 [ext_resource type="Script" uid="uid://drfq8ownwsaaj" path="res://UI_Stuff.gd" id="2_daaai"]
-[ext_resource type="Texture2D" uid="uid://bstdvtng6x6ke" path="res://ground.png" id="3_xpg4p"]
-[ext_resource type="Texture2D" uid="uid://cyqb3ovc5bhgx" path="res://skybox.png" id="4_gq67i"]
 [ext_resource type="Script" uid="uid://d25rt0qfhjq8" path="res://obstacle_spawner.gd" id="5_kdt26"]
+[ext_resource type="PackedScene" uid="uid://dc3drc28yjurp" path="res://obstacle.tscn" id="5_kt6p6"]
+[ext_resource type="PackedScene" uid="uid://cmtj6ni0hqv81" path="res://jump_obstacle.tscn" id="6_uu1iw"]
 [ext_resource type="PackedScene" uid="uid://rg3wef1x7vyd" path="res://level_finish.tscn" id="7_kt6p6"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_prkky"]
@@ -89,34 +89,49 @@ text = "quit?"
 [node name="label_timer" type="Timer" parent="."]
 autostart = true
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
-follow_viewport_enabled = true
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(58.5, 0)
-scale = Vector2(1.41778, 0.015)
-texture = ExtResource("3_xpg4p")
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("4_gq67i")
-
 [node name="obstacle_spawn_timer" type="Timer" parent="."]
 autostart = true
-
-[node name="obstacle_spawner" type="Node2D" parent="." node_paths=PackedStringArray("player")]
-script = ExtResource("5_kdt26")
-player = NodePath("../Player")
 
 [node name="Level_Finish" parent="." instance=ExtResource("7_kt6p6")]
 position = Vector2(4210, -249)
 
 [node name="Player" parent="." instance=ExtResource("1_8mr3b")]
+
+[node name="obstacle_spawner" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("5_kdt26")
+player = NodePath("../Player")
+
+[node name="obstacle" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
+position = Vector2(497, -196)
+
+[node name="obstacle2" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
+position = Vector2(3703, -82)
+
+[node name="obstacle3" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
+position = Vector2(2990, -91)
+
+[node name="obstacle4" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
+position = Vector2(1542, -108)
+
+[node name="obstacle5" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
+position = Vector2(2040, -113)
+
+[node name="jump_obstacle" type="Node2D" parent="."]
+
+[node name="jump_obstacle" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
+position = Vector2(126, -30)
+
+[node name="jump_obstacle2" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
+position = Vector2(746, -34)
+
+[node name="jump_obstacle3" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
+position = Vector2(1029, -32)
+
+[node name="jump_obstacle4" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
+position = Vector2(1799.5, -30.148)
+
+[node name="jump_obstacle5" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
+position = Vector2(2567.41, -31.9196)
 
 [connection signal="pressed" from="UI_Stuff/Control/Pause_Container/resume" to="UI_Stuff" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI_Stuff/Control/Pause_Container/reset" to="UI_Stuff" method="_on_reset_pressed"]

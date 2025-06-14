@@ -1,5 +1,22 @@
 extends Node
 
+#-> eventually get to it
+# TODO 1: Refactoring and Core Logic Improvements
+# - **Store raw time (milliseconds) in the dictionary for simpler comparisons.**
+# - **Ensure the new best time is correctly assigned to the dictionary only if it's an improvement.**
+# - **Use a dedicated variable for the current run's duration for better clarity.**
+# - **Rename the time calculation function to reflect its formatting purpose.**
+
+# TODO 2: Scene and Game Flow Improvements
+# - **Implement level completion based on in-level objectives, not just hardcoded time.**
+# - **Refine game over scene handling for smoother transitions.**
+# - **Consider making this script an Autoload for global accessibility.**
+
+# TODO 3: Save/Load and General Best Practices
+# - **Update the save file path to be cross-platform compatible.**
+# - **Add error handling for file operations during saving and loading.**
+# - **Gracefully handle levels with no prior scores when checking for best times.**
+
 #necessay varialbe for score tracking which requires
 #taking the start time of each level_start and taking time_elapsed and subtracking the start_time from it
 var level_score_dictionary: Dictionary
@@ -31,6 +48,7 @@ func _physics_process(_delta):
 	match level_started:
 		true: #need to incorporate a way to check the score and the times aren't right zzzzzzzzz
 			score = calculate_time(time_elapsed)
+			
 
 func _on_player_crashed():
 	level_started = false
@@ -45,6 +63,7 @@ func _on_player_crashed():
 	
 func _on_player_finished_level():
 	print('score tracker player finished level')
+	check_score(current_scene)
 	level_score_dictionary[get_tree().current_scene.name] = score
 	get_tree().paused = true
 	await get_tree().create_timer(2).timeout
@@ -83,13 +102,19 @@ func calculate_time(time_elapsed): #okay i had ai help me with this because i fo
 	var score = score_string % [minutes_display, seconds_display, milliseconds_display]
 	return score
 
-func check_score(current_level):
-	var new_time = time_elapsed
+func check_score(current_level): #we call this check whenever the level finishes and only assign score when the new_time is less than the old_time
+	var new_time = time_elapsed - start_time
 	var old_time_uncoded = ScoreTracker.level_score_dictionary[current_level]
 	old_time_uncoded = old_time_uncoded.split(':')
-	var old_time = old_time_uncoded[2]
+	var old_time = int((int(old_time_uncoded[1]) * 60) + (int(old_time_uncoded[2]) * 1000) + int(old_time_uncoded[3]))
+	print(new_time, old_time_uncoded, old_time)
 	if new_time < int(old_time):
-		return score
+		print(new_time)
+		print(old_time)
+		calculate_time(new_time)
+	else:
+		print(new_time < int(old_time))
+		score = level_score_dictionary[current_scene]
 		
 	
 func save_game():

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmtj6ni0hqv81"]
+
+[ext_resource type="Script" uid="uid://bsk716epgahyv" path="res://jump_obstacle.gd" id="1_5c5ls"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5c5ls"]
+size = Vector2(20, 79)
+
+[node name="jump_obstacle" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_5c5ls")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 29.5)
+shape = SubResource("RectangleShape2D_5c5ls")

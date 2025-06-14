@@ -13,6 +13,14 @@ var direction: float
 
 #dashing stuff
 @export var dashing_timer: Timer
+
+#attacking stuff
+@export var attack_timer: Timer
+var attack_region: PackedScene
+var attack_node: Node
+
+
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var state: States
@@ -28,7 +36,9 @@ enum States {
 	COLLIDED,
 	DEATH,
 	FALLING,
-	DASHING
+	DASHING,
+	ATTACKING,
+	NOTATTACKING
 }
 
 func _ready():
@@ -59,6 +69,8 @@ func _physics_process(delta):
 		emit_signal('state_changed', States.RUNNING, -1)
 	if Input.is_action_just_pressed('jump') and can_jump == true:
 		emit_signal('state_changed', States.JUMPING, delta)
+	if Input.is_action_just_pressed("attack") and state != States.ATTACKING:
+		emit_signal('state_changed', States.ATTACKING, delta)
 	if not is_on_floor() and Input.is_action_just_pressed('dash'):
 		emit_signal('state_changed', States.DASHING, delta)
 	
@@ -85,10 +97,17 @@ func _on_state_changed(new_state, _delta):
 			pass
 		6: #DASHING
 			dashing_timer.start()
+		7: #attacking
+			attack_region = preload('res://atack_shape.tscn')
+			attack_node = attack_region.instantiate()
+			add_child(attack_node)
+			attack_timer.start()
+		8: #not attackig
+			remove_child(attack_node)
+			emit_signal('state_changed', States.RUNNING, _delta)
 			
 	move_and_slide()
 			
-
 func _on_player_obstacle_collision_detection_body_entered(body):
 	if body.is_in_group('obstacles'):
 		ScoreTracker.emit_signal('player_crashed')
@@ -99,3 +118,8 @@ func _on_player_obstacle_collision_detection_body_entered(body):
 func _on_dashing__timer_timeout():
 	emit_signal('state_changed', States.RUNNING, 60)
 	dashing_timer.stop()
+
+
+func _on_attack_timer_timeout() -> void:
+	emit_signal('state_changed', States.NOTATTACKING, 60)
+	attack_timer.stop()

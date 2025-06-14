@@ -18,9 +18,9 @@ var random = RandomNumberGenerator.new()
 
 	
 func _on_obstacle_spawn_timer_timeout(): #this is where the game actually randomizes the stuff and spawns the timers
-	randomize_distance_interval()
-	spawn_obstacle()
-	score_counter()
+	#randomize_distance_interval()
+	#spawn_obstacle()
+	#score_counter()
 	pass
 func spawn_obstacle():
 	var obstacle = StaticBody2D.new()

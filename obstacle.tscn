@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc3drc28yjurp"]
+
+[ext_resource type="Script" uid="uid://c7idsmvttyt86" path="res://obstacle.gd" id="1_sl1jc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sl1jc"]
+size = Vector2(20, 205)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aubd6"]
+size = Vector2(41, 205)
+
+[node name="obstacle" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_sl1jc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 93.5)
+shape = SubResource("RectangleShape2D_sl1jc")
+
+[node name="destruction_area" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="destruction_area"]
+position = Vector2(0.5, 92.5)
+shape = SubResource("RectangleShape2D_aubd6")
+debug_color = Color(0.934076, 0.216574, 0.359452, 0.42)
+
+[connection signal="area_entered" from="destruction_area" to="." method="_on_destruction_area_area_entered"]
