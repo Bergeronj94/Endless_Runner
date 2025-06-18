@@ -1,0 +1,119 @@
+[gd_scene load_steps=16 format=3 uid="uid://bgsiicp3c1sfw"]
+
+[ext_resource type="Script" uid="uid://cohn60md3ryr8" path="res://floating_obstacles.gd" id="1_ts7a2"]
+[ext_resource type="Texture2D" uid="uid://hr0j54vqq2pg" path="res://Art Assets/draft 1/Chandelier.png" id="2_8x00p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8x00p"]
+radius = 34.7851
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ts7a2"]
+radius = 62.3939
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2ibn"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 0, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwssx"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 7936, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u27fj"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 11904, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_area0"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 0, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwxhp"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 1984, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq0hi"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 3968, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4eso"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 5952, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bh64x"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 7936, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tyig"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 9920, 1984, 1984)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqp80"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 11904, 1984, 1984)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bka7d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2ibn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwssx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u27fj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_area0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwxhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq0hi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4eso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bh64x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tyig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqp80")
+}],
+"loop": false,
+"name": &"launched",
+"speed": 5.0
+}]
+
+[node name="floating_obstacles" type="StaticBody2D" node_paths=PackedStringArray("anim")]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_ts7a2")
+anim = NodePath("AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8x00p")
+debug_color = Color(0.018866, 0.596631, 0.716172, 0.42)
+
+[node name="floating_area" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floating_area"]
+shape = SubResource("CircleShape2D_ts7a2")
+debug_color = Color(0.0406136, 0.63723, 0.381497, 0.42)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-10.5, 3.90997)
+scale = Vector2(0.11744, 0.0625908)
+sprite_frames = SubResource("SpriteFrames_bka7d")
+animation = &"launched"
+
+[connection signal="area_entered" from="floating_area" to="." method="_on_floating_area_area_entered"]

@@ -62,15 +62,26 @@ attack={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [layer_names]
 
 2d_physics/layer_1="world boundaries"
+3d_physics/layer_1="world boundaries"
 2d_physics/layer_2="obstacles"
+3d_physics/layer_2="obstacles"
 2d_physics/layer_3="player"
+3d_physics/layer_3="player"
 2d_physics/layer_4="finish"
+3d_physics/layer_4="finish"
 2d_physics/layer_5="destructable areas"
+3d_physics/layer_5="destructible areas"
 2d_physics/layer_6="attacks"
+3d_physics/layer_6="attacks"
 
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4nvi8wjlxubq"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_e421i"]
+specular_color = Color(1, 0.0980392, 1, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_o10gd"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_brbsc"]
+
+[node name="touch_ui" type="CanvasLayer"]
+layer = 3
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DASH" type="TouchScreenButton" parent="Control"]
+position = Vector2(40, 530.016)
+scale = Vector2(25, 28.9845)
+texture_normal = SubResource("CanvasTexture_e421i")
+action = "dash"
+
+[node name="JUMPING" type="TouchScreenButton" parent="Control"]
+position = Vector2(93, 586.016)
+scale = Vector2(28, 28.9845)
+texture_normal = SubResource("CanvasTexture_o10gd")
+action = "jump"
+
+[node name="ATTACK" type="TouchScreenButton" parent="Control"]
+position = Vector2(42, 618)
+scale = Vector2(26, 27.9846)
+texture_normal = SubResource("CanvasTexture_brbsc")
+action = "attack"

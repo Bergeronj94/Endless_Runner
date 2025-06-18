@@ -5,9 +5,16 @@ const SPEED = 300.0
 const DASH = 10
 const JUMP_VELOCITY = -400.0
 
+#animation stuff for now
+@export var anim: AnimatedSprite2D
+
 #handling jump variables
 var can_jump: bool = true
 
+#debug stuff
+@export var state_label: Label
+#3d stuff
+@export var player: Node3D 
 #variables for running
 var direction: float
 
@@ -79,14 +86,19 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _on_state_changed(new_state, _delta):
+	state_label.text = str(new_state)
 	previous_state = state
 	state = new_state
 	match state:
 		0: #IDLE
-			pass
+			anim.play('idle')
 		1: #RUNNING
-			pass
+			anim.play('running')
+			#player.get_node('AnimationPlayer').play('mixamo_com')
+			#player.rotation.y = PI/2
 		2: #JUMPING
+			#player.get_node('AnimationPlayer').play('Jump/jump')
+			anim.play('jumping')
 			velocity.y = JUMP_VELOCITY
 			can_jump = false
 		3: #COLLIDED
@@ -96,6 +108,7 @@ func _on_state_changed(new_state, _delta):
 		5: #FALLING and make sure you += the gravity so the falling because correct
 			pass
 		6: #DASHING
+			anim.play('dashing')
 			dashing_timer.start()
 		7: #attacking
 			attack_region = preload('res://atack_shape.tscn')
@@ -112,7 +125,6 @@ func _on_player_obstacle_collision_detection_body_entered(body):
 	if body.is_in_group('obstacles'):
 		ScoreTracker.emit_signal('player_crashed')
 		emit_signal('state_changed', States.DEATH, 60)
-		
 
 
 func _on_dashing__timer_timeout():

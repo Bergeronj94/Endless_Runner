@@ -1,15 +1,65 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmtj6ni0hqv81"]
+[gd_scene load_steps=10 format=3 uid="uid://cmtj6ni0hqv81"]
 
 [ext_resource type="Script" uid="uid://bsk716epgahyv" path="res://jump_obstacle.gd" id="1_5c5ls"]
+[ext_resource type="Texture2D" uid="uid://d6n86u1a4641" path="res://Art Assets/draft 1/Jump.png" id="2_402li"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5c5ls"]
-size = Vector2(20, 79)
+size = Vector2(43, 52)
 
-[node name="jump_obstacle" type="StaticBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_765qu"]
+atlas = ExtResource("2_402li")
+region = Rect2(0, 0, 2004, 1988)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0tuy"]
+atlas = ExtResource("2_402li")
+region = Rect2(0, 1988, 2004, 1988)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_moj5c"]
+atlas = ExtResource("2_402li")
+region = Rect2(0, 3976, 2004, 1988)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e38mw"]
+atlas = ExtResource("2_402li")
+region = Rect2(0, 5964, 2004, 1988)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nchnq"]
+atlas = ExtResource("2_402li")
+region = Rect2(0, 7952, 2004, 1988)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_35bqu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_765qu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0tuy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_moj5c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e38mw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nchnq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="jump_obstacle" type="StaticBody2D" node_paths=PackedStringArray("anim")]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_5c5ls")
+anim = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 29.5)
+position = Vector2(9.5, 43)
 shape = SubResource("RectangleShape2D_5c5ls")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(9.5, 40)
+scale = Vector2(0.0224551, 0.0291751)
+sprite_frames = SubResource("SpriteFrames_35bqu")

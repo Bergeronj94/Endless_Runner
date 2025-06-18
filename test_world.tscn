@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://domh3td8742fo"]
+[gd_scene load_steps=13 format=3 uid="uid://domh3td8742fo"]
 
 [ext_resource type="Script" uid="uid://xqd6wx1k4km4" path="res://test_world.gd" id="1_7f7gk"]
 [ext_resource type="PackedScene" uid="uid://c4icf36nysfx6" path="res://player.tscn" id="1_8mr3b"]
@@ -6,8 +6,11 @@
 [ext_resource type="Script" uid="uid://drfq8ownwsaaj" path="res://UI_Stuff.gd" id="2_daaai"]
 [ext_resource type="Script" uid="uid://d25rt0qfhjq8" path="res://obstacle_spawner.gd" id="5_kdt26"]
 [ext_resource type="PackedScene" uid="uid://dc3drc28yjurp" path="res://obstacle.tscn" id="5_kt6p6"]
+[ext_resource type="Script" uid="uid://dh4ejnnaf2wax" path="res://player_camera.gd" id="6_5457m"]
 [ext_resource type="PackedScene" uid="uid://cmtj6ni0hqv81" path="res://jump_obstacle.tscn" id="6_uu1iw"]
 [ext_resource type="PackedScene" uid="uid://rg3wef1x7vyd" path="res://level_finish.tscn" id="7_kt6p6"]
+[ext_resource type="PackedScene" uid="uid://bgsiicp3c1sfw" path="res://floating_obstacles.tscn" id="9_4tg7h"]
+[ext_resource type="PackedScene" uid="uid://dkpuqnb6ye4ri" path="res://foreground.tscn" id="10_ud3vi"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_prkky"]
 
@@ -96,42 +99,69 @@ autostart = true
 position = Vector2(4210, -249)
 
 [node name="Player" parent="." instance=ExtResource("1_8mr3b")]
+position = Vector2(24.144, -0.0503502)
+
+[node name="Camera2D2" type="Camera2D" parent="Player" node_paths=PackedStringArray("player")]
+skew = 0.253073
+zoom = Vector2(2.425, 2.425)
+process_callback = 0
+limit_left = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+editor_draw_limits = true
+script = ExtResource("6_5457m")
+player = NodePath("..")
+randomStrength = 15.0
+shakeFade = 5.0
 
 [node name="obstacle_spawner" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("5_kdt26")
 player = NodePath("../Player")
 
 [node name="obstacle" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
-position = Vector2(497, -196)
+position = Vector2(496, -40)
+scale = Vector2(0.455, 0.455)
 
 [node name="obstacle2" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
 position = Vector2(3703, -82)
+scale = Vector2(0.455, 0.455)
 
 [node name="obstacle3" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
-position = Vector2(2990, -91)
+position = Vector2(3000, -48)
+scale = Vector2(0.455, 0.455)
 
 [node name="obstacle4" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
-position = Vector2(1542, -108)
+position = Vector2(1544, -40)
+scale = Vector2(0.455, 0.455)
 
 [node name="obstacle5" parent="obstacle_spawner" groups=["obstacles"] instance=ExtResource("5_kt6p6")]
-position = Vector2(2040, -113)
+position = Vector2(2048, -40)
+scale = Vector2(0.455, 0.455)
 
 [node name="jump_obstacle" type="Node2D" parent="."]
 
 [node name="jump_obstacle" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
-position = Vector2(126, -30)
+position = Vector2(256, -64)
 
 [node name="jump_obstacle2" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
-position = Vector2(746, -34)
+position = Vector2(744, -64)
 
 [node name="jump_obstacle3" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
-position = Vector2(1029, -32)
+position = Vector2(952, -64)
 
 [node name="jump_obstacle4" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
-position = Vector2(1799.5, -30.148)
+position = Vector2(1800, -64)
 
 [node name="jump_obstacle5" parent="jump_obstacle" instance=ExtResource("6_uu1iw")]
-position = Vector2(2567.41, -31.9196)
+position = Vector2(2568, -64)
+
+[node name="Floating_obstacles" type="Node2D" parent="."]
+
+[node name="floating_obstacles" parent="Floating_obstacles" instance=ExtResource("9_4tg7h")]
+position = Vector2(808, -136)
+
+[node name="TileMapLayer" parent="." instance=ExtResource("10_ud3vi")]
+scale = Vector2(0.06, 0.06)
 
 [connection signal="pressed" from="UI_Stuff/Control/Pause_Container/resume" to="UI_Stuff" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI_Stuff/Control/Pause_Container/reset" to="UI_Stuff" method="_on_reset_pressed"]

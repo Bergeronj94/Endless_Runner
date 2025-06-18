@@ -36,6 +36,8 @@ signal level_start
 signal player_crashed
 signal player_finished_level
 
+signal obstacle_destroyed #emitted by obstacles and connected to camera2d in each level to shake
+
 
 func _ready():
 	load_game()
