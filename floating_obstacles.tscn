@@ -1,53 +1,105 @@
-[gd_scene load_steps=16 format=3 uid="uid://bgsiicp3c1sfw"]
+[gd_scene load_steps=29 format=3 uid="uid://bgsiicp3c1sfw"]
 
 [ext_resource type="Script" uid="uid://cohn60md3ryr8" path="res://floating_obstacles.gd" id="1_ts7a2"]
-[ext_resource type="Texture2D" uid="uid://hr0j54vqq2pg" path="res://Art Assets/draft 1/Chandelier.png" id="2_8x00p"]
+[ext_resource type="Texture2D" uid="uid://bpcyk32owjvf" path="res://Art Assets/Draft 2/Swingable object.png" id="2_8x00p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8x00p"]
 radius = 34.7851
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ts7a2"]
-radius = 62.3939
+radius = 75.0067
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d2ibn"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 0, 1984, 1984)
+region = Rect2(0, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwssx"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 7936, 1984, 1984)
+region = Rect2(2064, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u27fj"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 11904, 1984, 1984)
+region = Rect2(4128, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_area0"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 0, 1984, 1984)
+region = Rect2(4128, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mwxhp"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 1984, 1984, 1984)
+region = Rect2(2064, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tq0hi"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 3968, 1984, 1984)
+region = Rect2(0, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4eso"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 5952, 1984, 1984)
+region = Rect2(0, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bh64x"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 7936, 1984, 1984)
+region = Rect2(2064, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2tyig"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 9920, 1984, 1984)
+region = Rect2(4128, 0, 2064, 2084)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqp80"]
 atlas = ExtResource("2_8x00p")
-region = Rect2(0, 11904, 1984, 1984)
+region = Rect2(6192, 0, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bka7d"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(8256, 0, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyyvy"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 2084, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2qso"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(2064, 2084, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6un6"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(4128, 2084, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yycyf"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(6192, 2084, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhwb1"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(8256, 2084, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpgb2"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 4168, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6i46"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(2064, 4168, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eapuo"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(4128, 4168, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nh63"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(6192, 4168, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o14om"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(8256, 4168, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7g4a"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(0, 6252, 2064, 2084)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43heb"]
+atlas = ExtResource("2_8x00p")
+region = Rect2(2064, 6252, 2064, 2084)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bka7d"]
 animations = [{
@@ -60,12 +112,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u27fj")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_area0")
 }, {
@@ -74,7 +121,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tq0hi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 24.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w4eso")
 }, {
@@ -86,10 +138,49 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hqp80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bka7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pyyvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2qso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6un6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yycyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhwb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpgb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6i46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eapuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nh63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o14om")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7g4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43heb")
 }],
 "loop": false,
 "name": &"launched",
-"speed": 5.0
+"speed": 24.0
 }]
 
 [node name="floating_obstacles" type="StaticBody2D" node_paths=PackedStringArray("anim")]
@@ -111,9 +202,11 @@ shape = SubResource("CircleShape2D_ts7a2")
 debug_color = Color(0.0406136, 0.63723, 0.381497, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-10.5, 3.90997)
+position = Vector2(-4, 52)
 scale = Vector2(0.11744, 0.0625908)
 sprite_frames = SubResource("SpriteFrames_bka7d")
 animation = &"launched"
+frame = 16
+frame_progress = 1.0
 
 [connection signal="area_entered" from="floating_area" to="." method="_on_floating_area_area_entered"]

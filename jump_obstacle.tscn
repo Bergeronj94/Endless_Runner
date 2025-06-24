@@ -1,48 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmtj6ni0hqv81"]
+[gd_scene load_steps=5 format=3 uid="uid://cmtj6ni0hqv81"]
 
 [ext_resource type="Script" uid="uid://bsk716epgahyv" path="res://jump_obstacle.gd" id="1_5c5ls"]
-[ext_resource type="Texture2D" uid="uid://d6n86u1a4641" path="res://Art Assets/draft 1/Jump.png" id="2_402li"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5c5ls"]
-size = Vector2(43, 52)
+[ext_resource type="Texture2D" uid="uid://dylxwcq1l6g0t" path="res://Art Assets/Draft 2/Jumpobstacle.png" id="2_402li"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_765qu"]
 atlas = ExtResource("2_402li")
-region = Rect2(0, 0, 2004, 1988)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q0tuy"]
-atlas = ExtResource("2_402li")
-region = Rect2(0, 1988, 2004, 1988)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_moj5c"]
-atlas = ExtResource("2_402li")
-region = Rect2(0, 3976, 2004, 1988)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e38mw"]
-atlas = ExtResource("2_402li")
-region = Rect2(0, 5964, 2004, 1988)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nchnq"]
-atlas = ExtResource("2_402li")
-region = Rect2(0, 7952, 2004, 1988)
+region = Rect2(0, 0, 1984, 1984)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_35bqu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_765qu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q0tuy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_moj5c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e38mw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nchnq")
 }],
 "loop": true,
 "name": &"default",
@@ -50,16 +19,17 @@ animations = [{
 }]
 
 [node name="jump_obstacle" type="StaticBody2D" node_paths=PackedStringArray("anim")]
+scale = Vector2(40, 20)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_5c5ls")
 anim = NodePath("AnimatedSprite2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(9.5, 43)
-shape = SubResource("RectangleShape2D_5c5ls")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(9.5, 40)
+position = Vector2(1, -26.2)
 scale = Vector2(0.0224551, 0.0291751)
 sprite_frames = SubResource("SpriteFrames_35bqu")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-8.7, -66.2)
+polygon = PackedVector2Array(7, 52, 7, 56, 6, 57, 6, 59, 4, 59, 2, 63, 3, 65, 3, 66, 13, 66, 13, 61, 12, 59, 11, 57, 10, 56, 12, 56, 12, 53, 9, 52)

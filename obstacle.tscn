@@ -1,91 +1,59 @@
-[gd_scene load_steps=25 format=3 uid="uid://dc3drc28yjurp"]
+[gd_scene load_steps=17 format=3 uid="uid://dc3drc28yjurp"]
 
 [ext_resource type="Script" uid="uid://c7idsmvttyt86" path="res://obstacle.gd" id="1_sl1jc"]
-[ext_resource type="Texture2D" uid="uid://bn7eil0cces06" path="res://Art Assets/draft 1/Breakable obstacle.png" id="2_aubd6"]
+[ext_resource type="Texture2D" uid="uid://c7qsi0sxrcf03" path="res://Art Assets/Draft 2/Breakable object.png" id="2_aubd6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sl1jc"]
-size = Vector2(20, 205)
+size = Vector2(26.6667, 135.833)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aubd6"]
-size = Vector2(41, 205)
+size = Vector2(70.5, 135.833)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vcivv"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 37, 1952, 1925)
+region = Rect2(0, 0, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tyhon"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 1962, 1952, 1925)
+region = Rect2(1984, 0, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvdov"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 3887, 1952, 1925)
+region = Rect2(3968, 0, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c2epm"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 5812, 1952, 1925)
+region = Rect2(0, 1984, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_snuee"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 7737, 1952, 1925)
+region = Rect2(1984, 1984, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6pt3h"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 9662, 1952, 1925)
+region = Rect2(3968, 1984, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jdobg"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 11587, 1952, 1925)
+region = Rect2(0, 3968, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o5xj2"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 13512, 1952, 1925)
+region = Rect2(1984, 3968, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m2ml2"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 15437, 1952, 1925)
+region = Rect2(3968, 3968, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_njwqr"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 17362, 1952, 1925)
+region = Rect2(3968, 3968, 1984, 1984)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6iomf"]
 atlas = ExtResource("2_aubd6")
-region = Rect2(0, 19287, 1952, 1925)
+region = Rect2(0, 0, 1984, 1984)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ak4mi"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 21212, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1k4yy"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 23137, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sv57j"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 25062, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ntuxy"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 26987, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v026j"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 28912, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_534bm"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 30837, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aubd6"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 30837, 1952, 1925)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ly76e"]
-atlas = ExtResource("2_aubd6")
-region = Rect2(0, 37, 1952, 1925)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_qnul7"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ak4mi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -114,54 +82,30 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m2ml2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_njwqr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6iomf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ak4mi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1k4yy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sv57j")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ntuxy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v026j")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_534bm")
 }],
-"loop": false,
+"loop": true,
 "name": &"break",
-"speed": 60.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aubd6")
+"texture": SubResource("AtlasTexture_njwqr")
 }],
 "loop": true,
 "name": &"broken",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ly76e")
+"texture": SubResource("AtlasTexture_6iomf")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 24.0
 }]
 
 [node name="obstacle" type="StaticBody2D" node_paths=PackedStringArray("anim", "collision")]
-scale = Vector2(0.06, 0.06)
+scale = Vector2(10, 10)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_sl1jc")
@@ -169,22 +113,22 @@ anim = NodePath("AnimatedSprite2D")
 collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 93.5)
+position = Vector2(2.38419e-07, -65.4166)
 shape = SubResource("RectangleShape2D_sl1jc")
 
 [node name="destruction_area" type="Area2D" parent="."]
+position = Vector2(4.31803, -167.51)
 collision_layer = 16
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="destruction_area"]
-position = Vector2(0.5, 92.5)
+position = Vector2(10.432, 102.093)
 shape = SubResource("RectangleShape2D_aubd6")
 debug_color = Color(0.934076, 0.216574, 0.359452, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(16.6, 90)
+position = Vector2(0, -100)
 scale = Vector2(0.0579918, 0.114286)
-sprite_frames = SubResource("SpriteFrames_qnul7")
-animation = &"break"
+sprite_frames = SubResource("SpriteFrames_ak4mi")
 
 [connection signal="area_entered" from="destruction_area" to="." method="_on_destruction_area_area_entered"]

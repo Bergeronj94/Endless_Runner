@@ -1,9 +1,14 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const DASH = 10
-const JUMP_VELOCITY = -400.0
+const SPEED = 1000
+const DASH = 1250
+const JUMP_VELOCITY = -1000
+const MAXSPEED = 1250
+
+#camera stuff for raycasting limits
+@export var top_limit_ray: RayCast2D
+@export var bottom_limit_ray: RayCast2D
 
 #animation stuff for now
 @export var anim: AnimatedSprite2D
@@ -15,23 +20,27 @@ var can_jump: bool = true
 @export var state_label: Label
 #3d stuff
 @export var player: Node3D 
+
 #variables for running
 var direction: float
+var previous_direction: Array
 
 #dashing stuff
 @export var dashing_timer: Timer
 
 #attacking stuff
+@export var attack_right_pos: Node2D
+@export var attack_left_pos: Node2D
 @export var attack_timer: Timer
 var attack_region: PackedScene
 var attack_node: Node
-
-
+var can_attack: bool = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var state: States
 var previous_state: States #using this to check whether you need ot emit again
+
 #signals for states
 signal state_changed(new_state, delta)
 
@@ -50,39 +59,48 @@ enum States {
 
 func _ready():
 	connect('state_changed', Callable(self, "_on_state_changed"))
-	state = States.RUNNING
+	state = States.IDLE
 	emit_signal('state_changed', state, 60)
 	
 func _physics_process(delta):
 	if not is_on_floor():
+		emit_signal('state_changed', States.FALLING, delta)
 		velocity.y += gravity * delta
 	match state:
 		0: #idle
-			velocity = Vector2.ZERO
+			velocity.x = move_toward(velocity.x, 0, SPEED * delta)
 		1: #running
-			velocity.x = move_toward(velocity.x, SPEED, 0.75)
+			direction = Input.get_axis('left', 'right')
+			match direction:
+				-1.0: #step values should always be positive
+					velocity.x = move_toward(velocity.x, -SPEED, (SPEED * delta))
+				1.0:
+					velocity.x = move_toward(velocity.x, SPEED, (SPEED * delta))
 		2: #jumping
-			velocity.x = move_toward(velocity.x, SPEED, 0.75)
+			velocity.x = move_toward(velocity.x, SPEED, delta)
 		5: #falling
 			pass
 		6: #dashing
-			velocity.x += DASH
+			velocity.x = DASH
 	if is_on_floor():
 		can_jump = true
+		emit_signal('state_changed', States.RUNNING, -1.0)
 	#trying to create my own things for input and stuff for running
 	if Input.is_action_pressed('right') and is_on_floor():
 		emit_signal('state_changed', States.RUNNING, 1.0)
 	if Input.is_action_pressed('left') and is_on_floor():
-		emit_signal('state_changed', States.RUNNING, -1)
+		emit_signal('state_changed', States.RUNNING, -1.0)
 	if Input.is_action_just_pressed('jump') and can_jump == true:
 		emit_signal('state_changed', States.JUMPING, delta)
-	if Input.is_action_just_pressed("attack") and state != States.ATTACKING:
+	if Input.is_action_just_pressed("attack") and state != States.ATTACKING and can_attack == true:
 		emit_signal('state_changed', States.ATTACKING, delta)
 	if not is_on_floor() and Input.is_action_just_pressed('dash'):
 		emit_signal('state_changed', States.DASHING, delta)
+	if Input.is_anything_pressed() == false and state != States.FALLING and state != States.JUMPING and state != States.DASHING:
+		emit_signal('state_changed', States.IDLE, delta)
 	
 	#clamping our velocity before we call move_and_slide
-	velocity.x = clamp(velocity.x, 0, 750)
+	velocity.x = clamp(velocity.x, -MAXSPEED, MAXSPEED)
 	move_and_slide()
 
 func _on_state_changed(new_state, _delta):
@@ -90,14 +108,19 @@ func _on_state_changed(new_state, _delta):
 	previous_state = state
 	state = new_state
 	match state:
-		0: #IDLE
+		0: #IDLE #used for attacking
 			anim.play('idle')
 		1: #RUNNING
-			anim.play('running')
-			#player.get_node('AnimationPlayer').play('mixamo_com')
-			#player.rotation.y = PI/2
+			if direction != 0.0:
+				previous_direction.append(direction)
+			match direction:
+				-1.0:
+					anim.flip_h = true
+					anim.play('running')
+				1.0:
+					anim.flip_h = false
+					anim.play('running')
 		2: #JUMPING
-			#player.get_node('AnimationPlayer').play('Jump/jump')
 			anim.play('jumping')
 			velocity.y = JUMP_VELOCITY
 			can_jump = false
@@ -106,16 +129,37 @@ func _on_state_changed(new_state, _delta):
 		4: #DEATH
 			pass
 		5: #FALLING and make sure you += the gravity so the falling because correct
-			pass
+			anim.play('falling')
 		6: #DASHING
-			anim.play('dashing')
+			match direction:
+				-1.0:
+					anim.flip_h = false
+					anim.play('dashing')
+				1.0:
+					anim.flip_h = true
+					anim.play('dashing')
 			dashing_timer.start()
 		7: #attacking
+			can_attack = false #set this so you can't spawn another attack until the other is gone
 			attack_region = preload('res://atack_shape.tscn')
 			attack_node = attack_region.instantiate()
 			add_child(attack_node)
+			#code to make sure the attack shows in the right place
+			attack_node.position = attack_right_pos.position
+			if len(previous_direction) > 0: #we do this to check for if the previous direction was faced so we attack in teh right direction
+				match previous_direction[-1]:
+					1.0:
+						attack_node.position = attack_right_pos.position
+					-1.0:
+						attack_node.position = attack_left_pos.position
+			match direction:
+				-1.0:
+					attack_node.position = attack_left_pos.position
+				1.0:
+					attack_node.position = attack_right_pos.position
 			attack_timer.start()
 		8: #not attackig
+			can_attack = true
 			remove_child(attack_node)
 			emit_signal('state_changed', States.RUNNING, _delta)
 			

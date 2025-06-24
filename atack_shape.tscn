@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bb1ey2vrdkcpr"]
 
 [node name="atack_shape" type="Area2D"]
+scale = Vector2(10, 10)
 collision_layer = 32
 collision_mask = 16
 
