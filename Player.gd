@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
 
-const SPEED = 1000
-const DASH = 1250
-const JUMP_VELOCITY = -1000
-const MAXSPEED = 1250
+var SPEED: float
+var DASH: float
+var JUMP_VELOCITY: float
+var MAXSPEED:float
 
 #camera stuff for raycasting limits
 @export var top_limit_ray: RayCast2D
@@ -27,6 +27,7 @@ var previous_direction: Array
 
 #dashing stuff
 @export var dashing_timer: Timer
+var can_dash: bool
 
 #attacking stuff
 @export var attack_right_pos: Node2D
@@ -58,12 +59,18 @@ enum States {
 }
 
 func _ready():
+	var VectorSPEED = attack_left_pos.position.distance_to(attack_right_pos.position)
+	SPEED = VectorSPEED
+	DASH = VectorSPEED / 0.4
+	MAXSPEED = SPEED * 3.5
+	JUMP_VELOCITY = -SPEED
+	print(SPEED, '\n',DASH, '\n', MAXSPEED, '\n', JUMP_VELOCITY)
 	connect('state_changed', Callable(self, "_on_state_changed"))
 	state = States.IDLE
 	emit_signal('state_changed', state, 60)
 	
 func _physics_process(delta):
-	if not is_on_floor():
+	if not is_on_floor() and state != States.DASHING:
 		emit_signal('state_changed', States.FALLING, delta)
 		velocity.y += gravity * delta
 	match state:
@@ -73,16 +80,19 @@ func _physics_process(delta):
 			direction = Input.get_axis('left', 'right')
 			match direction:
 				-1.0: #step values should always be positive
-					velocity.x = move_toward(velocity.x, -SPEED, (SPEED * delta))
+					velocity.x = move_toward(velocity.x, -SPEED, (SPEED * delta * 2))
 				1.0:
-					velocity.x = move_toward(velocity.x, SPEED, (SPEED * delta))
+					velocity.x = move_toward(velocity.x, SPEED, (SPEED * delta * 2))
 		2: #jumping
 			velocity.x = move_toward(velocity.x, SPEED, delta)
 		5: #falling
 			pass
 		6: #dashing
-			velocity.x = DASH
+			print('dashing in physics')
+			velocity.x = velocity.x + (direction * DASH)
+			velocity.y = 0
 	if is_on_floor():
+		can_dash = true
 		can_jump = true
 		emit_signal('state_changed', States.RUNNING, -1.0)
 	#trying to create my own things for input and stuff for running
@@ -94,9 +104,9 @@ func _physics_process(delta):
 		emit_signal('state_changed', States.JUMPING, delta)
 	if Input.is_action_just_pressed("attack") and state != States.ATTACKING and can_attack == true:
 		emit_signal('state_changed', States.ATTACKING, delta)
-	if not is_on_floor() and Input.is_action_just_pressed('dash'):
+	if Input.is_action_just_pressed('dash') and can_dash == true:
 		emit_signal('state_changed', States.DASHING, delta)
-	if Input.is_anything_pressed() == false and state != States.FALLING and state != States.JUMPING and state != States.DASHING:
+	if Input.is_anything_pressed() == false and state != States.FALLING and state != States.JUMPING and state != States.DASHING and direction == 0.0:
 		emit_signal('state_changed', States.IDLE, delta)
 	
 	#clamping our velocity before we call move_and_slide
@@ -131,12 +141,13 @@ func _on_state_changed(new_state, _delta):
 		5: #FALLING and make sure you += the gravity so the falling because correct
 			anim.play('falling')
 		6: #DASHING
+			can_dash = false
 			match direction:
 				-1.0:
-					anim.flip_h = false
+					anim.flip_h = true
 					anim.play('dashing')
 				1.0:
-					anim.flip_h = true
+					anim.flip_h = false
 					anim.play('dashing')
 			dashing_timer.start()
 		7: #attacking
@@ -163,15 +174,13 @@ func _on_state_changed(new_state, _delta):
 			remove_child(attack_node)
 			emit_signal('state_changed', States.RUNNING, _delta)
 			
-	move_and_slide()
-			
 func _on_player_obstacle_collision_detection_body_entered(body):
 	if body.is_in_group('obstacles'):
 		ScoreTracker.emit_signal('player_crashed')
 		emit_signal('state_changed', States.DEATH, 60)
 
 
-func _on_dashing__timer_timeout():
+func _on_dashing_timer_timeout():
 	emit_signal('state_changed', States.RUNNING, 60)
 	dashing_timer.stop()
 

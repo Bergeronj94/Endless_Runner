@@ -189,7 +189,7 @@ top_limit_ray = NodePath("raycast_nodes/Top_Camera_Limit_Raycast")
 bottom_limit_ray = NodePath("raycast_nodes/Bottom_Camera__Limit_Ray")
 anim = NodePath("AnimatedSprite2D")
 state_label = NodePath("Label")
-dashing_timer = NodePath("dashing _timer")
+dashing_timer = NodePath("dashing_timer")
 attack_right_pos = NodePath("attack_right")
 attack_left_pos = NodePath("attack_left")
 attack_timer = NodePath("attack_timer")
@@ -207,15 +207,19 @@ collision_mask = 2
 position = Vector2(0.0828457, -0.307625)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
-[node name="dashing _timer" type="Timer" parent="."]
-wait_time = 0.5
+[node name="dashing_timer" type="Timer" parent="."]
+wait_time = 0.25
 
 [node name="attack_timer" type="Timer" parent="."]
 wait_time = 0.5
 
 [node name="Label" type="Label" parent="."]
-offset_top = -23.0
-offset_right = 40.0
+offset_left = 521.616
+offset_top = -515.989
+offset_right = 561.616
+offset_bottom = -492.989
+theme_override_colors/font_color = Color(0.948494, 0.965867, 0.999817, 1)
+theme_override_font_sizes/font_size = 500
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_op7ga")
@@ -242,8 +246,11 @@ position = Vector2(870, 179)
 [node name="attack_left" type="Node2D" parent="."]
 position = Vector2(-1362, 130)
 
+[node name="coyote_time_timer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="player_obstacle_collision_detection" to="." method="_on_player_obstacle_collision_detection_body_entered"]
 [connection signal="body_exited" from="player_obstacle_collision_detection" to="." method="_on_player_obstacle_collision_detection_body_exited"]
-[connection signal="timeout" from="dashing _timer" to="." method="_on_dashing__timer_timeout"]
+[connection signal="timeout" from="dashing_timer" to="." method="_on_dashing_timer_timeout"]
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="ray_cast_check" to="raycast_nodes/Top_Camera_Limit_Raycast" method="_on_ray_cast_check_timeout"]
+[connection signal="timeout" from="coyote_time_timer" to="." method="_on_coyote_time_timer_timeout"]
