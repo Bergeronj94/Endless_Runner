@@ -15,6 +15,7 @@ var MAXSPEED:float
 
 #handling jump variables
 var can_jump: bool = true
+@export var jump_timer: Timer
 
 #debug stuff
 @export var state_label: Label
@@ -60,8 +61,8 @@ enum States {
 
 func _ready():
 	var VectorSPEED = attack_left_pos.position.distance_to(attack_right_pos.position)
-	SPEED = VectorSPEED
-	DASH = VectorSPEED / 0.4
+	SPEED = VectorSPEED * 2
+	DASH = VectorSPEED 
 	MAXSPEED = SPEED * 3.5
 	JUMP_VELOCITY = -SPEED
 	print(SPEED, '\n',DASH, '\n', MAXSPEED, '\n', JUMP_VELOCITY)
@@ -70,9 +71,9 @@ func _ready():
 	emit_signal('state_changed', state, 60)
 	
 func _physics_process(delta):
-	if not is_on_floor() and state != States.DASHING:
+	if (state != States.DASHING and state != States.JUMPING) and is_on_floor() == false:
 		emit_signal('state_changed', States.FALLING, delta)
-		velocity.y += gravity * delta
+		velocity.y += gravity #* delta
 	match state:
 		0: #idle
 			velocity.x = move_toward(velocity.x, 0, SPEED * delta)
@@ -89,7 +90,7 @@ func _physics_process(delta):
 			pass
 		6: #dashing
 			print('dashing in physics')
-			velocity.x = velocity.x + (direction * DASH)
+			velocity.x += direction * DASH
 			velocity.y = 0
 	if is_on_floor():
 		can_dash = true
@@ -100,8 +101,10 @@ func _physics_process(delta):
 		emit_signal('state_changed', States.RUNNING, 1.0)
 	if Input.is_action_pressed('left') and is_on_floor():
 		emit_signal('state_changed', States.RUNNING, -1.0)
-	if Input.is_action_just_pressed('jump') and can_jump == true:
+	if Input.is_action_pressed('jump') and can_jump == true: #trying to modify this to jump while you want toa maximum
 		emit_signal('state_changed', States.JUMPING, delta)
+	if Input.is_action_just_released('jump') and is_on_floor() == false:
+		emit_signal('state_changed', States.FALLING, delta)
 	if Input.is_action_just_pressed("attack") and state != States.ATTACKING and can_attack == true:
 		emit_signal('state_changed', States.ATTACKING, delta)
 	if Input.is_action_just_pressed('dash') and can_dash == true:
@@ -131,6 +134,7 @@ func _on_state_changed(new_state, _delta):
 					anim.flip_h = false
 					anim.play('running')
 		2: #JUMPING
+			jump_timer.start()
 			anim.play('jumping')
 			velocity.y = JUMP_VELOCITY
 			can_jump = false
@@ -181,10 +185,16 @@ func _on_player_obstacle_collision_detection_body_entered(body):
 
 
 func _on_dashing_timer_timeout():
-	emit_signal('state_changed', States.RUNNING, 60)
+	emit_signal('state_changed', States.FALLING, 60)
 	dashing_timer.stop()
+	velocity.x = direction * SPEED
 
 
 func _on_attack_timer_timeout() -> void:
 	emit_signal('state_changed', States.NOTATTACKING, 60)
 	attack_timer.stop()
+
+
+func _on_jump_tmer_timeout() -> void:
+	if state != States.DASHING: #OTHERWISE WE GET AN IMMEDIATE FALL TO THE GROUND EVEN WHEN DASHING
+		emit_signal('state_changed', States.FALLING, 60)

@@ -27,6 +27,7 @@ func _ready(): #these only need to be limited once
 	
 	
 	
+	
 func _physics_process(delta: float) -> void:
 	#print(shake_strength)
 	if shake_strength > 0: #gets the random shaking each frame
@@ -44,3 +45,4 @@ func randomOffset() -> Vector2:
 func _on_label_timer_timeout() -> void:
 	limit_top = player.top_limit_ray.collision_point.y
 	limit_bottom = player.bottom_limit_ray.collision_point.y
+	print(limit_top, '\n', limit_bottom )

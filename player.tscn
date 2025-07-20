@@ -181,13 +181,14 @@ animations = [{
 "speed": 24.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("top_limit_ray", "bottom_limit_ray", "anim", "state_label", "dashing_timer", "attack_right_pos", "attack_left_pos", "attack_timer") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("top_limit_ray", "bottom_limit_ray", "anim", "jump_timer", "state_label", "dashing_timer", "attack_right_pos", "attack_left_pos", "attack_timer") groups=["player"]]
 collision_layer = 12
 collision_mask = 11
 script = ExtResource("1_r2m44")
 top_limit_ray = NodePath("raycast_nodes/Top_Camera_Limit_Raycast")
 bottom_limit_ray = NodePath("raycast_nodes/Bottom_Camera__Limit_Ray")
 anim = NodePath("AnimatedSprite2D")
+jump_timer = NodePath("Jump_Tmer")
 state_label = NodePath("Label")
 dashing_timer = NodePath("dashing_timer")
 attack_right_pos = NodePath("attack_right")
@@ -208,7 +209,7 @@ position = Vector2(0.0828457, -0.307625)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
 [node name="dashing_timer" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.5
 
 [node name="attack_timer" type="Timer" parent="."]
 wait_time = 0.5
@@ -229,12 +230,13 @@ frame_progress = 0.671851
 [node name="raycast_nodes" type="Node2D" parent="."]
 
 [node name="Top_Camera_Limit_Raycast" type="RayCast2D" parent="raycast_nodes"]
-target_position = Vector2(8, -2656)
+target_position = Vector2(8, -10000)
+hit_from_inside = true
 collide_with_areas = true
 script = ExtResource("3_i3pqv")
 
 [node name="Bottom_Camera__Limit_Ray" type="RayCast2D" parent="raycast_nodes"]
-target_position = Vector2(-16, 4229)
+target_position = Vector2(-16, 100)
 script = ExtResource("4_hqtel")
 
 [node name="ray_cast_check" type="Timer" parent="."]
@@ -248,9 +250,12 @@ position = Vector2(-1362, 130)
 
 [node name="coyote_time_timer" type="Timer" parent="."]
 
+[node name="Jump_Tmer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="player_obstacle_collision_detection" to="." method="_on_player_obstacle_collision_detection_body_entered"]
 [connection signal="body_exited" from="player_obstacle_collision_detection" to="." method="_on_player_obstacle_collision_detection_body_exited"]
 [connection signal="timeout" from="dashing_timer" to="." method="_on_dashing_timer_timeout"]
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="ray_cast_check" to="raycast_nodes/Top_Camera_Limit_Raycast" method="_on_ray_cast_check_timeout"]
 [connection signal="timeout" from="coyote_time_timer" to="." method="_on_coyote_time_timer_timeout"]
+[connection signal="timeout" from="Jump_Tmer" to="." method="_on_jump_tmer_timeout"]

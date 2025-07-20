@@ -25,13 +25,15 @@ obstacle_spawner = NodePath("../obstacle_spawner")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World_Floor"]
 shape = SubResource("WorldBoundaryShape2D_prkky")
 
-[node name="UI_Stuff" type="CanvasLayer" parent="." node_paths=PackedStringArray("player", "position", "speed", "jumps", "obstacle_spawner", "Pause")]
+[node name="UI_Stuff" type="CanvasLayer" parent="." node_paths=PackedStringArray("player", "position", "speed", "jumps", "dash", "attack", "obstacle_spawner", "Pause")]
 process_mode = 3
 script = ExtResource("2_daaai")
 player = NodePath("../Player")
 position = NodePath("Control/HBoxContainer/pos")
 speed = NodePath("Control/HBoxContainer/speed")
 jumps = NodePath("Control/HBoxContainer/jumps")
+dash = NodePath("Control/Abilities_Cooldown/dash")
+attack = NodePath("Control/Abilities_Cooldown/attack")
 obstacle_spawner = NodePath("../obstacle_spawner")
 Pause = NodePath("Control/Pause_Container")
 
@@ -88,6 +90,24 @@ text = "reset?"
 layout_mode = 2
 text = "quit?"
 
+[node name="Abilities_Cooldown" type="HBoxContainer" parent="UI_Stuff/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+alignment = 1
+
+[node name="dash" type="Label" parent="UI_Stuff/Control/Abilities_Cooldown"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+
+[node name="attack" type="Label" parent="UI_Stuff/Control/Abilities_Cooldown"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+
 [node name="label_timer" type="Timer" parent="."]
 autostart = true
 
@@ -95,7 +115,8 @@ autostart = true
 autostart = true
 
 [node name="Level_Finish" parent="." instance=ExtResource("7_kt6p6")]
-position = Vector2(19104, -696)
+position = Vector2(16488, 2288)
+scale = Vector2(1, 1.32)
 
 [node name="Player" parent="." instance=ExtResource("1_8mr3b")]
 position = Vector2(272, -904)
@@ -103,7 +124,7 @@ position = Vector2(272, -904)
 [node name="Camera2D2" type="Camera2D" parent="Player" node_paths=PackedStringArray("player")]
 position = Vector2(0.390625, 0)
 skew = 0.253073
-zoom = Vector2(0.185, 0.185)
+zoom = Vector2(0.055, 0.055)
 process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true
@@ -117,12 +138,12 @@ script = ExtResource("5_kdt26")
 player = NodePath("../Player")
 
 [node name="obstacle" parent="obstacle_spawner" instance=ExtResource("8_4tg7h")]
-position = Vector2(3264, 1904)
+position = Vector2(3176, 2904)
 
 [node name="jump_obstacle" type="Node2D" parent="."]
 
 [node name="jump_obstacle" parent="jump_obstacle" instance=ExtResource("9_ud3vi")]
-position = Vector2(7032, 1632)
+position = Vector2(6240, 2976)
 
 [node name="Floating_obstacles" type="Node2D" parent="."]
 

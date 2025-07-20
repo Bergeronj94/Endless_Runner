@@ -2,7 +2,9 @@ extends RayCast2D
 
 var collider: Node
 var collision_point: Vector2
-
+func _ready():
+	collision_point = get_collision_point()
+	
 func _physics_process(delta: float) -> void:
 	return_collision_position()
 	
