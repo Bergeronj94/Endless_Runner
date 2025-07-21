@@ -65,7 +65,7 @@ func _ready():
 	DASH = VectorSPEED 
 	MAXSPEED = SPEED * 3.5
 	JUMP_VELOCITY = -SPEED
-	print(SPEED, '\n',DASH, '\n', MAXSPEED, '\n', JUMP_VELOCITY)
+	#print(SPEED, '\n',DASH, '\n', MAXSPEED, '\n', JUMP_VELOCITY)
 	connect('state_changed', Callable(self, "_on_state_changed"))
 	state = States.IDLE
 	emit_signal('state_changed', state, 60)
@@ -81,15 +81,15 @@ func _physics_process(delta):
 			direction = Input.get_axis('left', 'right')
 			match direction:
 				-1.0: #step values should always be positive
-					velocity.x = move_toward(velocity.x, -SPEED, (SPEED * delta * 2))
+					velocity.x = move_toward(velocity.x, -SPEED, (SPEED * delta * 4))
 				1.0:
-					velocity.x = move_toward(velocity.x, SPEED, (SPEED * delta * 2))
+					velocity.x = move_toward(velocity.x, SPEED, (SPEED * delta * 4))
 		2: #jumping
 			velocity.x = move_toward(velocity.x, SPEED, delta)
 		5: #falling
 			pass
 		6: #dashing
-			print('dashing in physics')
+			#print('dashing in physics')
 			velocity.x += direction * DASH
 			velocity.y = 0
 	if is_on_floor():
@@ -177,7 +177,7 @@ func _on_state_changed(new_state, _delta):
 			can_attack = true
 			remove_child(attack_node)
 			emit_signal('state_changed', States.RUNNING, _delta)
-			
+	
 func _on_player_obstacle_collision_detection_body_entered(body):
 	if body.is_in_group('obstacles'):
 		ScoreTracker.emit_signal('player_crashed')

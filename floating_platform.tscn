@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://ox6jn7caglys"]
+
+[ext_resource type="Script" uid="uid://m7kf2itesq80" path="res://floating_platform.gd" id="1_1314b"]
+[ext_resource type="Texture2D" uid="uid://osayh4ef8dc5" path="res://Art Assets/Draft 2/Platforms.png" id="2_7teko"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jqd13"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7teko")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1314b"]
+size = Vector2(1984, 115)
+
+[node name="floating platform" type="Node2D" node_paths=PackedStringArray("left_move_point", "right_move_point", "left_ledge_ray", "right_ledge_ray") groups=["platforms"]]
+script = ExtResource("1_1314b")
+left_move_point = NodePath("left_move")
+right_move_point = NodePath("right_move")
+left_ledge_ray = NodePath("left_ledge_ray")
+right_ledge_ray = NodePath("right_ledge_ray")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -878)
+sprite_frames = SubResource("SpriteFrames_jqd13")
+
+[node name="left_move" type="Node2D" parent="."]
+position = Vector2(-2296.58, -0.566406)
+
+[node name="right_move" type="Node2D" parent="."]
+position = Vector2(2275.17, -0.566406)
+
+[node name="platform_body" type="StaticBody2D" parent="."]
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platform_body"]
+position = Vector2(5, 47.5)
+shape = SubResource("RectangleShape2D_1314b")
+
+[node name="left_ledge_ray" type="RayCast2D" parent="."]
+position = Vector2(-829, -241)
+target_position = Vector2(-365, 481)
+collision_mask = 4
+
+[node name="right_ledge_ray" type="RayCast2D" parent="."]
+position = Vector2(889, -241)
+target_position = Vector2(221, 433)
+collision_mask = 4
